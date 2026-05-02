@@ -47,7 +47,7 @@ project-folder/
 1. Clone the repository:
 
 ```
-git clone https://github.com/your-username/network-backup.git
+git clone [https://github.com/your-username/network-backup.git](https://github.com/NitishKumar-official/Network-Device-Backup-Automation)
 cd network-backup
 ```
 
