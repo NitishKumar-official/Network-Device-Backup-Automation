@@ -1,0 +1,36 @@
+# inventory.yaml
+# Add your real device IPs, usernames, passwords here
+# device_type options: cisco_ios, cisco_xe, cisco_nxos, juniper, arista_eos
+
+devices:
+  - name: "Router-01"
+    host: "192.168.1.1"
+    device_type: "cisco_ios"
+    username: "admin"
+    password: "admin123"
+    secret: "enable123"       # enable/privileged mode password
+    timeout: 10
+
+  - name: "Router-02"
+    host: "192.168.1.2"
+    device_type: "cisco_ios"
+    username: "admin"
+    password: "admin123"
+    secret: "enable123"
+    timeout: 10
+
+  - name: "Switch-Core-01"
+    host: "192.168.1.10"
+    device_type: "cisco_ios"
+    username: "admin"
+    password: "admin123"
+    secret: "enable123"
+    timeout: 10
+
+  - name: "Switch-Access-01"
+    host: "192.168.1.11"
+    device_type: "cisco_ios"
+    username: "admin"
+    password: "admin123"
+    secret: "enable123"
+    timeout: 10

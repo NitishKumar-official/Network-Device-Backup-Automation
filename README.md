@@ -1,131 +1,104 @@
-#  Network Device Backup Automation (Python + Netmiko)
+# 🔧 Network Config Backup System
 
-##  Project Overview
+Automated network device configuration backup tool using **Python + Netmiko**.
 
-This project is a simple network automation tool built using Python and Netmiko. It connects to multiple network devices (routers/switches) over SSH and automatically takes their running configuration backup.
-
-The main goal of this project is to reduce manual effort and ensure regular backup of network device configurations.
-
----
-
-## Features
-
-* Connects to multiple devices using SSH
-* Takes running configuration backup
-* Saves backup in local files
-* Handles connection errors
-* Easy to scale for large networks
+## 🎯 Problem Solved
+In real companies, network device configs are backed up manually.  
+If a device crashes → config is **lost**.  
+This tool **automatically** connects to multiple routers/switches, fetches their running config, and saves versioned backups.
 
 ---
 
-##  Technologies Used
-
-* Python
-* Netmiko (for SSH connection)
-* Basic Networking (Cisco devices)
+## 🚀 Features
+- ✅ SSH into **multiple routers/switches** simultaneously
+- ✅ Fetches `show running-config` from each device
+- ✅ Saves **timestamped, versioned backups** per device
+- ✅ **YAML-driven** device inventory — easy to add/remove devices
+- ✅ **JSON report** generated after every backup run
+- ✅ Handles failures gracefully (auth errors, timeouts, unreachable hosts)
+- ✅ Full **PyTest** unit test suite with mocked SSH connections
 
 ---
 
-##  Project Structure
-
+## 📁 Project Structure
 ```
-project-folder/
-│
-├── backup_script.py
-├── devices.py (optional)
-├── backups/
-│   ├── 192.168.1.1_backup.txt
-│   ├── 192.168.1.2_backup.txt
-│
-└── README.md
+network-config-backup/
+├── backup.py            # Main backup engine
+├── inventory.yaml       # Device inventory (hosts, credentials)
+├── requirements.txt     # Dependencies
+├── tests/
+│   └── test_backup.py   # PyTest unit tests
+├── backups/             # Auto-created — stores .cfg files
+│   └── Router-01/
+│       └── 2025-05-01_10-30-00.cfg
+├── reports/             # Auto-created — JSON run reports
+│   └── report_2025-05-01_10-30-00.json
+└── logs/
+    └── backup.log       # Run logs
 ```
 
 ---
 
-##  Installation
+## ⚙️ Setup & Usage
 
-1. Clone the repository:
-
-```
-git clone [https://github.com/your-username/network-backup.git](https://github.com/NitishKumar-official/Network-Device-Backup-Automation)
-cd network-backup
+### 1. Install dependencies
+```bash
+pip install -r requirements.txt
 ```
 
-2. Install dependencies:
-
-```
-pip install netmiko
-```
-
----
-
-##  Usage
-
-1. Update device details in the script:
-
-```python
-devices = [
-    {
-        'device_type': 'cisco_ios',
-        'host': '192.168.1.1',
-        'username': 'admin',
-        'password': 'admin123',
-    }
-]
+### 2. Configure your devices in `inventory.yaml`
+```yaml
+devices:
+  - name: "Router-01"
+    host: "192.168.1.1"
+    device_type: "cisco_ios"
+    username: "admin"
+    password: "your_password"
+    secret: "enable_password"
 ```
 
-2. Run the script:
-
+### 3. Run backup
+```bash
+python backup.py
 ```
-python backup_script.py
-```
 
-3. Backups will be saved in the project folder.
-
----
-
-## 📸 Sample Output
-
-```
-Backup saved for 192.168.1.1
-Backup saved for 192.168.1.2
+### 4. Run tests
+```bash
+pytest tests/ -v
 ```
 
 ---
 
-## ⚠️ Error Handling
-
-* If a device is unreachable, the script will show an error message.
-* The script continues running for other devices.
-
----
-
-## 🔥 Future Improvements
-
-* Add timestamp to backup files
-* Read device list from CSV/Excel
-* Send email notifications
-* Create web dashboard using Flask
-* Schedule automatic backups
+## 📊 Sample Output
+```
+2025-05-01 10:30:00 [INFO] 🚀 Network Config Backup Started
+2025-05-01 10:30:02 [INFO] ✅ Config fetched from Router-01
+2025-05-01 10:30:02 [INFO] 💾 Saved: backups/Router-01/2025-05-01_10-30-02.cfg
+2025-05-01 10:30:05 [INFO] ❌ Timeout — Switch-02 (192.168.1.11) unreachable
+2025-05-01 10:30:05 [INFO] ✅ Success: 3 | ❌ Failed: 1 | Total: 4
+```
 
 ---
 
-##  Use Case
-
-This project can be used in real-world networking environments to:
-
-* Maintain regular backups
-* Reduce manual configuration effort
-* Improve network reliability
-
----
-
-##  Author
-
-Nitish Kumar
+## 🛠️ Tech Stack
+| Tool | Purpose |
+|------|---------|
+| Python 3.10+ | Core language |
+| Netmiko | SSH connection to network devices |
+| PyYAML | Device inventory management |
+| PyTest | Unit testing with mocked SSH |
+| JSON | Backup run reporting |
+| Logging | Run logs & audit trail |
 
 ---
 
-##  Conclusion
+## 📌 Supported Devices
+- Cisco IOS / IOS-XE / NX-OS
+- Juniper JunOS
+- Arista EOS
+- Any Netmiko-supported platform
 
-This project demonstrates basic network automation using Python and Netmiko, which is highly useful in modern IT infrastructure management.
+---
+
+## 👤 Author
+**Nitish Kumar** — [github.com/ernitish123](https://github.com/ernitish123)
